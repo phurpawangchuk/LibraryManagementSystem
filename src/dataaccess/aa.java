@@ -53,6 +53,12 @@ public class aa implements DataAccess {
 
     }
 
+    @Override
+    public void saveNewUser(User user) {
+        System.out.println("AAAAAAA");
+    }
+
+
     static void loadUserMap(List<User> userList) {
         HashMap<String, User> users = new HashMap<String, User>();
         userList.forEach(user -> users.put(user.getId(), user));
@@ -86,7 +92,20 @@ public class aa implements DataAccess {
 
     public static void main(String[] args) {
         aa c = new aa();
-        Object user = c.readFromStorage(DataAccessFacade.StorageType.BOOKS);
+
+        DataAccess da = new DataAccessFacade();
+//
+        User admin = new User("admin","admin",Auth.ADMIN);
+        da.saveNewUser(admin);
+//
+        User lm = new User("librarian","librarian",Auth.LIBRARIAN);
+        da.saveNewUser(lm);
+//
+        User both = new User("superuser","superuser",Auth.BOTH);
+        da.saveNewUser(both);
+
+        Object user = c.readFromStorage(DataAccessFacade.StorageType.USERS);
+
         System.out.println(user);
     }
 }

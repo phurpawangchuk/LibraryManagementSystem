@@ -7,7 +7,6 @@ import java.io.Serializable;
 	private static final long serialVersionUID = 5147265048973262104L;
 
 	private String id;
-	
 	private String password;
 	private Auth authorization;
 	public User(String id, String pass, Auth  auth) {
@@ -29,5 +28,4 @@ import java.io.Serializable;
 	public String toString() {
 		return "[" + id + ":" + password + ", " + authorization.toString() + "]";
 	}
-	
 }

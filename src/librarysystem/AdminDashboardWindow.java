@@ -143,8 +143,10 @@ public class AdminDashboardWindow extends JFrame implements ActionListener {
 
 			btnAddMember.setEnabled(true);
 			btnAddBook.setEnabled(true);
-			btnViewUser.setEnabled(true);
 			btnBookCopy.setEnabled(true);
+            btnViewMember.setEnabled(true);
+            btnViewBook.setEnabled(true);
+            btnViewUser.setEnabled(true);
 
 			break;
 		case "BOTH":
@@ -162,8 +164,8 @@ public class AdminDashboardWindow extends JFrame implements ActionListener {
 	}
 
 	public void displayUser() {
-		
-		dashRecordTableModel = new DefaultTableModel(){
+        p2.removeAll();
+        dashRecordTableModel = new DefaultTableModel(){
 			private static final long serialVersionUID = 1L;
 
 			// Override the isCellEditable method to make all cells uneditable
@@ -177,11 +179,11 @@ public class AdminDashboardWindow extends JFrame implements ActionListener {
 		dashRecordTableModel.addColumn("Role");
 
 		dashRecordTable = new JTable(dashRecordTableModel);
-		dashRecordTable.setBounds(40, 20, 620, 350);
+		dashRecordTable.setBounds(20, 20, 670, 350);
 		dashRecordTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS); // Adjust column width automatically
 		dashRecordTable.getTableHeader().setReorderingAllowed(false); // Disable column reordering
 		JScrollPane scrollPane = new JScrollPane(dashRecordTable);
-		scrollPane.setBounds(40, 20, 620, 350);
+		scrollPane.setBounds(20, 20, 670, 350);
 		p2.add(scrollPane);
 		HashMap<String, User> userMap = ci.getAllUsers();
 		for (Map.Entry<String, User> mapentry : userMap.entrySet()) {
@@ -193,6 +195,7 @@ public class AdminDashboardWindow extends JFrame implements ActionListener {
 	}//end of user display
 	
 	public void displayMember() {
+        p2.removeAll();
 		dashRecordTableModel = new DefaultTableModel(){
 			private static final long serialVersionUID = 1L;
 
@@ -208,11 +211,11 @@ public class AdminDashboardWindow extends JFrame implements ActionListener {
 		dashRecordTableModel.addColumn("Telephone No.");
 	
 		dashRecordTable = new JTable(dashRecordTableModel);
-		dashRecordTable.setBounds(40, 20, 620, 350);
+		dashRecordTable.setBounds(20, 20, 670, 350);
 		dashRecordTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS); // Adjust column width automatically
 		dashRecordTable.getTableHeader().setReorderingAllowed(false); // Disable column reordering
 		JScrollPane scrollPane = new JScrollPane(dashRecordTable);
-		scrollPane.setBounds(40, 20, 620, 350);
+		scrollPane.setBounds(20, 20, 670, 350);
 		p2.add(scrollPane);
 		HashMap<String, LibraryMember> memberMap = ci.getAllMembers();
 		for (Map.Entry<String, LibraryMember> mapentry : memberMap.entrySet()) {
@@ -225,6 +228,7 @@ public class AdminDashboardWindow extends JFrame implements ActionListener {
 	}//end of view Members
 	
 	public void displayBooks() {
+        p2.removeAll();
 		dashRecordTableModel = new DefaultTableModel(){
 			private static final long serialVersionUID = 1L;
 
@@ -234,23 +238,24 @@ public class AdminDashboardWindow extends JFrame implements ActionListener {
 				return false;
 			}
 		};
-		
 		dashRecordTableModel.addColumn("ISBN No.");
 		dashRecordTableModel.addColumn("Book Title");
 		dashRecordTableModel.addColumn("Copies");
 		dashRecordTableModel.addColumn("Maximum Checkout Days");
-	
-		dashRecordTable = new JTable(dashRecordTableModel);
-		dashRecordTable.setBounds(40, 20, 620, 350);
+        dashRecordTableModel.addColumn("NoOfCopy");
+
+
+        dashRecordTable = new JTable(dashRecordTableModel);
+		dashRecordTable.setBounds(20, 20, 670, 350);
 		dashRecordTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS); // Adjust column width automatically
 		dashRecordTable.getTableHeader().setReorderingAllowed(false); // Disable column reordering
 		JScrollPane scrollPane = new JScrollPane(dashRecordTable);
-		scrollPane.setBounds(40, 20, 620, 350);
+		scrollPane.setBounds(20, 20, 670, 350);
 		p2.add(scrollPane);
 		HashMap<String, Book> memberMap = ci.getAllBooks();
 		for (Map.Entry<String, Book> mapentry : memberMap.entrySet()) {
 			String[] rowData = { mapentry.getValue().getIsbn(), mapentry.getValue().getTitle(), ""+ mapentry.getValue().getCopyNums(),
-					""+mapentry.getValue().getMaxCheckoutLength()};
+                  	""+mapentry.getValue().getMaxCheckoutLength(),""+mapentry.getValue().getNumCopies()};
 			dashRecordTableModel.addRow(rowData);
 
 		}

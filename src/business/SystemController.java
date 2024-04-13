@@ -104,7 +104,6 @@ public class SystemController implements ControllerInterface {
     public String getMemberId() {
         HashMap<String, LibraryMember> lm = getAllMembers();
         String maxMemberId = getMaxMemberId(lm);
-        System.out.println("Max Member ID: " + maxMemberId);
         return maxMemberId;
     }
 
@@ -136,6 +135,4 @@ public class SystemController implements ControllerInterface {
         id++;
         return String.valueOf(id);
     }
-
-
 }

@@ -11,6 +11,8 @@ import javax.swing.table.DefaultTableModel;
 
 import business.Author;
 import business.Book;
+import business.ControllerInterface;
+import business.SystemController;
 import dataaccess.DataAccessFacade;
 
 public class AddBookWindow extends JFrame implements ActionListener {
@@ -25,20 +27,16 @@ public class AddBookWindow extends JFrame implements ActionListener {
 	JRadioButton rb21, rb7;
 	DefaultTableModel authorTableModel;
 	JTable authorTable;
-	//DefaultListModel<String> authorListModel;
 	ArrayList<Author> authors = new ArrayList<Author>();
 	AdminDashboardWindow dashboard;
+
+    ControllerInterface ci = new SystemController();
 
 	public void addAuthor(Author a) {
 		authors.add(a);
 		String[] rowData = { a.getFirstName(), a.getLastName(), a.getAddress().getCity(), a.getCredit() };
 		authorTableModel.addRow(rowData);
 	}
-
-	public ArrayList<Author> getAuthor() {
-		return authors;
-	}
-
 	public AddBookWindow(AdminDashboardWindow dashboard) {
 		// TODO Auto-generated constructor stub
 		this.dashboard=dashboard;
@@ -88,7 +86,7 @@ public class AddBookWindow extends JFrame implements ActionListener {
 		p1.add(txtTitle);
 
 		rb21 = new JRadioButton("21 Days");
-		rb21.setBounds(200, 120, 80, 25);
+		rb21.setBounds(200, 120, 100, 25);
 		rb21.setActionCommand("21");
 
 		p1.add(rb21);
@@ -118,7 +116,7 @@ public class AddBookWindow extends JFrame implements ActionListener {
 		p1.add(scrollPane);
 
 		JLabel lblAddRemoveAuthor = new JLabel("Add/Remove Authors");
-		lblAddRemoveAuthor.setBounds(40, 380, 120, 30);
+		lblAddRemoveAuthor.setBounds(40, 380, 150, 30);
 		p1.add(lblAddRemoveAuthor);
 
 		btnAddAuthor = Util.buttonStyle(new JButton("+"));
@@ -140,7 +138,6 @@ public class AddBookWindow extends JFrame implements ActionListener {
 		p1.add(btnAddBook);
 		btnAddBook.addActionListener(this);
 		
-		
 		btnBack = Util.newbuttonStyle(new JButton("<<Main Menu"));
 		btnBack.setBounds(40, 450, 150, 30);
 		p1.add(btnBack);
@@ -158,7 +155,8 @@ public class AddBookWindow extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		// TODO Auto-generated method stub
-		String isbn = txtIsbn.getText();
+
+        String isbn = txtIsbn.getText();
 		String title = txtTitle.getText();
 		String maxlen = lendDaysGroup.getSelection().getActionCommand();
 		int len = Integer.parseInt(maxlen);
@@ -168,16 +166,9 @@ public class AddBookWindow extends JFrame implements ActionListener {
             setVisible(false);
             dispose();
         }else {
-            // check empty fields
-            if (isbn.isEmpty() || title.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "All Fields are Required");
+            if (title.length() < 3 || title.length() > 50) {
+                JOptionPane.showMessageDialog(null, "Book title should be between 3 and 50 characters");
                 return;
-            }
-
-            // validation for isbn
-            if (!isbn.matches("\\d{2}-\\d{7}")) {
-                JOptionPane.showMessageDialog(null, "Please enter ISBN number in format XX-XXXXXXX.");
-                return; // Return without proceeding if telephone number format is incorrect
             }
 
             if (ae.getSource() == btnAddAuthor) {
@@ -193,11 +184,11 @@ public class AddBookWindow extends JFrame implements ActionListener {
                 }
             }
 
-
             if (ae.getSource() == btnAddBook) {
                 Book book = new Book(isbn, title, len, authors);
                 DataAccessFacade daf = new DataAccessFacade();
                 HashMap<String, Book> map = daf.readBooksMap();
+
                 if (authors.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Authors should not be empty");
                     return;

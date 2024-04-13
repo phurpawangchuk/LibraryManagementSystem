@@ -140,12 +140,14 @@ public class AddMemberWindow extends JFrame implements ActionListener {
 		Util.newbuttonStyle(btnBack);
 		btnBack.addActionListener(this);
 		add(btnBack);
-		
-
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
+
+        String[] fieldNames = {"Member ID", "First Name", "Last Name", "Street", "State", "City"};
+        JTextField[] fields = {txtMemId, txtFirstName, txtLastName, txtStreet, txtState, txtCity};
+
         // TODO Auto-generated method stub
         String memId = txtMemId.getText();
         String firstname = txtFirstName.getText();
@@ -163,26 +165,31 @@ public class AddMemberWindow extends JFrame implements ActionListener {
             dispose();
         }
         else{
-        if (memId.isEmpty() || firstname.isEmpty() || lastname.isEmpty() || street.isEmpty() || state.isEmpty()
-                || city.isEmpty() || telephone.isEmpty() || zip.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Fields should not be empty");
-            return;
-        }
+            for (int i = 0; i < fields.length; i++) {
+                String fieldValue = fields[i].getText();
+                String fieldName = fieldNames[i];
+                if (fieldValue.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, fieldName + " should not be empty");
+                    return;
+                }
+                if (fieldValue.length() < 3 || fieldValue.length() > 15) {
+                    JOptionPane.showMessageDialog(null, fieldName + " length should be between 3 and 15 characters");
+                    return;
+                }
+            }
+            if (zip.length() < 3 || zip.length() > 7) {
+                JOptionPane.showMessageDialog(null, "Zip code should be between 3 and 7 characters");
+                return;
+            }
 
-        boolean memIdCheck = memId.matches("\\d{4}");
-        boolean telephoneCheck = telephone.matches("\\d{3}-\\d{3}-\\d{4}");
-        String msgId = "", msgTelString = "";
-        if (!memIdCheck)
-            msgId = "Member Id should be 4 digit numbers\n";
-        if (!telephoneCheck)
-            msgTelString = "Telephone should be in XXX-XXX-XXXX format ";
-        String msg = msgId + msgTelString;
-        if (!(memIdCheck && telephoneCheck)) {
-            JOptionPane.showMessageDialog(null, msg);
-            return;
-        }
+            boolean telephoneCheck = Util.validateTelephone(telephone);
+            String msgTelString = "Telephone should be in XXX-XXX-XXXX format ";
+            if (!(telephoneCheck)) {
+                JOptionPane.showMessageDialog(null, msgTelString);
+                return;
+            }
 
-        if (ae.getSource() == btnAddMember) {
+            if (ae.getSource() == btnAddMember) {
             Address address = new Address(street, city, state, zip);
             LibraryMember libraryMember = new LibraryMember(memId, firstname, lastname, telephone, address);
             DataAccessFacade daf = new DataAccessFacade();
@@ -193,7 +200,6 @@ public class AddMemberWindow extends JFrame implements ActionListener {
             } else {
                 daf.saveNewMember(libraryMember);
                 JOptionPane.showMessageDialog(null, "Members added sucessfully");
-
                 // new dashboard;
             }
         }

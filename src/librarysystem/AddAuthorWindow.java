@@ -115,10 +115,9 @@ public class AddAuthorWindow extends JFrame implements ActionListener {
 		txtZip.setText("52556");
 		p2.add(txtZip);
 
-		txtTelephone = new JTextField();
+        txtTelephone = new JFormattedTextField(Util.TelephoneFormatter());
 		txtTelephone.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
 		txtTelephone.setBounds(160, 160, 120, 25);
-		txtTelephone.setText("641-123-4657");
 		p1.add(txtTelephone);
 
 		txtBio = new JTextField();
@@ -158,6 +157,9 @@ public class AddAuthorWindow extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
+        String[] fieldNames = {"First Name", "Last Name", "Street", "State", "City"};
+        JTextField[] fields = {txtFirstName, txtLastName, txtStreet, txtState, txtCity};
+
         String firstname = txtFirstName.getText();
         String lastname = txtLastName.getText();
         String biography = txtBio.getText();
@@ -169,23 +171,39 @@ public class AddAuthorWindow extends JFrame implements ActionListener {
         String zip = txtZip.getText();
 
 
+
         if (ae.getSource() == btnCancelAuthor) {
             dispose();
             setVisible(false);
             parentWindow.setVisible(true);
         }else{
         // Check for empty fields
-        if (firstname.isEmpty() || lastname.isEmpty() || street.isEmpty() || city.isEmpty() || state.isEmpty()
-                || zip.isEmpty() || telephone.isEmpty() || biography.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "All fields are required.");
-            return; // Return without proceeding if any field is empty
-        }
-
-        // Telephone number validation
-        if (!telephone.matches("\\d{3}-\\d{3}-\\d{4}")) {
-            JOptionPane.showMessageDialog(null, "Please enter telephone number in format XXX-XXX-XXXX.");
-            return; // Return without proceeding if telephone number format is incorrect
-        }
+//        if (firstname.isEmpty() || lastname.isEmpty() || street.isEmpty() || city.isEmpty() || state.isEmpty()
+//                || zip.isEmpty() || telephone.isEmpty() || biography.isEmpty()) {
+//            JOptionPane.showMessageDialog(null, "All fields are required.");
+//            return; // Return without proceeding if any field is empty
+//        }
+            for (int i = 0; i < fields.length; i++) {
+                String fieldValue = fields[i].getText();
+                String fieldName = fieldNames[i];
+                if (fieldValue.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, fieldName + " should not be empty");
+                    return;
+                }
+                if (fieldValue.length() < 3 || fieldValue.length() > 15) {
+                    JOptionPane.showMessageDialog(null, fieldName + " length should be between 3 and 15 characters");
+                    return;
+                }
+            }
+            if (zip.length() < 3 || zip.length() > 7) {
+                JOptionPane.showMessageDialog(null, "Zip code should be between 3 and 7 characters");
+                return;
+            }
+            // Telephone number validation
+            if (!telephone.matches("\\d{3}-\\d{3}-\\d{4}")) {
+                JOptionPane.showMessageDialog(null, "Please enter telephone number in format XXX-XXX-XXXX.");
+                return; // Return without proceeding if telephone number format is incorrect
+            }
 
         if (ae.getSource() == btnAddAuthor) {
             Address address = new Address(street, city, state, zip);

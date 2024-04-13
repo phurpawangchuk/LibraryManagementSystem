@@ -166,21 +166,26 @@ public class DataAccessFacade implements DataAccess {
 	    books.put(isbn, book);
 	    saveToStorage(StorageType.BOOKS, books);
 	}
-	
+//
 	public  void updateLibraryMember(LibraryMember member) {
 	    HashMap<String, LibraryMember> librarymember = readMemberMap();
 	    String memId = member.getMemberId();
 	    librarymember.put(memId, member);
 	    saveToStorage(StorageType.MEMBERS, librarymember);
 	}
-	
+
 	public void UpdateMember(LibraryMember member) {
 		HashMap<String, LibraryMember> mems = readMemberMap();
 		String memberId = member.getMemberId();
 		mems.put(memberId, member);
-		saveToStorage(StorageType.MEMBERS, mems);	
+		saveToStorage(StorageType.MEMBERS, mems);
 	}
-	
 
-	
+
+    //implement: other save operations
+    public void saveNewUser(User user) {
+        HashMap<String, User> u = readUserMap();
+        u.put(user.getId(),user);
+        saveToStorage(StorageType.USERS, u);
+    }
 }

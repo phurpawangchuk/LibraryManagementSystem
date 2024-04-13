@@ -123,10 +123,6 @@ public class LoginWindow extends JFrame implements ActionListener {
 
     private void openDashboardWindow(String role) {
     	AdminDashboardWindow adw=new AdminDashboardWindow(role);
-
-    	System.out.println(role);
-
-
         setVisible(false);
           dispose();
         String message = "Welcome, " + role + "!";
@@ -139,10 +135,8 @@ public class LoginWindow extends JFrame implements ActionListener {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				new LoginWindow();
-
 			}
 		});
-
 	}// end of main
 
 }

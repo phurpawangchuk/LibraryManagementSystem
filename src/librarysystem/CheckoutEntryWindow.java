@@ -2,9 +2,11 @@ package librarysystem;
 
 import business.*;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -15,16 +17,11 @@ import javax.swing.table.DefaultTableModel;
 import dataaccess.DataAccessFacade;
 
 public class CheckoutEntryWindow extends JFrame implements ActionListener {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	LocalDate checkoutDate;
 	JTextField txtCheckOutDate, txtdueDate, txtBookTitle, txtBookDuration;
 	JButton btnAddEntry, btnBack, btnCheckEntry;
 	CheckoutRecordWindow crw;
 	ControllerInterface ci = new SystemController();
-	LibraryMember lmember;
 	HashMap<String, LibraryMember> memberMap;
 	HashMap<String, Book> bookMap;
 	Book book;
@@ -35,11 +32,12 @@ public class CheckoutEntryWindow extends JFrame implements ActionListener {
 
 	public CheckoutEntryWindow(CheckoutRecordWindow crw) {
 		// TODO Auto-generated constructor stub
-		
+
 		memberMap = new DataAccessFacade().readMemberMap();
 		bookMap = new DataAccessFacade().readBooksMap();
 		this.crw = crw;
 		book = bookMap.get(crw.getISBN());
+
 		setBounds(0, 0, 660, 600);
 		setTitle("Check Out Entry");
 		setLayout(null);
@@ -80,7 +78,16 @@ public class CheckoutEntryWindow extends JFrame implements ActionListener {
 		txtCheckOutDate.setText(LocalDate.now().toString());
 		p1.add(txtCheckOutDate);
 
-		txtdueDate = new JTextField();
+
+        txtCheckOutDate.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                validateCheckoutDate();
+            }
+        });
+
+
+        txtdueDate = new JTextField();
         txtdueDate.setEditable(false);
 		txtdueDate.setBounds(160, 80, 150, 25);
 		txtdueDate.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -145,7 +152,22 @@ public class CheckoutEntryWindow extends JFrame implements ActionListener {
 
 	}
 
-	@Override
+    private void validateCheckoutDate() {
+        String text = txtCheckOutDate.getText();
+        try {
+            LocalDate currentDate = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate enteredDate = LocalDate.parse(text, formatter);
+            if (enteredDate.isBefore(currentDate)) {
+                throw new Exception("Entered date must not be a past date");
+            }
+        } catch (Exception ex) {
+            txtCheckOutDate.setText(LocalDate.now().toString());
+            JOptionPane.showMessageDialog(this, "Invalid checkout date: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    @Override
 	public void actionPerformed(ActionEvent ae) {
 
         String checkoutDate = txtCheckOutDate.getText();
@@ -153,7 +175,8 @@ public class CheckoutEntryWindow extends JFrame implements ActionListener {
         String dueDate = ci.getDueDate(checkoutDate, duration);
 
         if (ae.getSource() == btnBack) {
-            setVisible(false);
+            LibrarySystem.hideAllWindows();
+            crw.setVisible(true);
             dispose();
         }
         else{

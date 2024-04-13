@@ -3,8 +3,6 @@ package librarysystem;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -54,21 +52,21 @@ public class CheckoutRecordWindow extends JFrame implements ActionListener {
 		txtMemId = new JTextField();
 		txtMemId.setBounds(160, 40, 120, 25);
 		txtMemId.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
-		txtMemId.setText("1004");
+		txtMemId.setText("1090");
 		p1.add(txtMemId);
 
-		txtIsbn = new JTextField();
+        txtIsbn = new JFormattedTextField(Util.IsbnFormatter());
 		txtIsbn.setBounds(160, 80, 120, 25);
 		txtIsbn.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
 		p1.add(txtIsbn);
-		txtIsbn.setText("28-12331");
+//		txtIsbn.setText("12-3456789");
 
 		// Buttons
-
 		btnCheck = Util.newbuttonStyle(new JButton("Check"));
 		btnCheck.setBounds(40, 120, 100, 40);
 		p1.add(btnCheck);
 		btnCheck.addActionListener(this);
+
 
 		btnBack = Util.newbuttonStyle(new JButton("<<Main Menu"));
 		btnBack.setBounds(160, 120, 150, 40);
@@ -120,6 +118,7 @@ public class CheckoutRecordWindow extends JFrame implements ActionListener {
 
         String isbnNo = txtIsbn.getText();
         String memID = txtMemId.getText();
+
         DataAccessFacade daf = new DataAccessFacade();
         LibraryMember member = daf.readMemberMap().get(memID);
         if (ae.getSource() == btnBack) {
