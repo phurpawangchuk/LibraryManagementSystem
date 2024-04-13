@@ -178,7 +178,7 @@ public class CheckoutEntryWindow extends JFrame implements ActionListener {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate enteredDate = LocalDate.parse(text, formatter);
             if (enteredDate.isBefore(currentDate)) {
-                throw new Exception("Entered date must not be a past date");
+                throw new Exception("Checkout date must not be a past date");
             }
         } catch (Exception ex) {
             txtCheckOutDate.setText(LocalDate.now().toString());
@@ -217,6 +217,7 @@ public class CheckoutEntryWindow extends JFrame implements ActionListener {
                 showAddedRecords(coe);
                 book.removeCopy();
                 daf.updateBook(book);
+                btnAddEntry.setEnabled(false);
             }
         }
     }

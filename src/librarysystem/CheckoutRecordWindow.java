@@ -73,8 +73,8 @@ public class CheckoutRecordWindow extends JFrame implements ActionListener {
 		p1.add(btnBack);
 		btnBack.addActionListener(this);
 
-		btnContinue = Util.newbuttonStyle(new JButton("Continue"));
-		btnContinue.setBounds(330, 120, 100, 40);
+		btnContinue = Util.newbuttonStyle(new JButton("Continue>>"));
+		btnContinue.setBounds(330, 120, 125, 40);
 		p1.add(btnContinue);
 		btnContinue.setEnabled(false);
 		btnContinue.addActionListener(this);
@@ -135,12 +135,17 @@ public class CheckoutRecordWindow extends JFrame implements ActionListener {
         if (ae.getSource() == btnCheck) {
             boolean checkRecord = ci.checkRecord(memID, isbnNo);   //checking member and book availability
             if (checkRecord) {
-                JOptionPane.showMessageDialog(null, "Record found! Click continue to check out");
                 book = daf.readBooksMap().get(isbnNo);
+                if(!book.isAvailable()){
+                    JOptionPane.showMessageDialog(null, "No copies available for checkout.All out...sorry!");
+                    btnContinue.setEnabled(false);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Record found! Click continue to check out");
+                    btnContinue.setEnabled(true);
+                }
                 String membername = daf.readMemberMap().get(getMemId()).getFirstName()+" "+daf.readMemberMap().get(getMemId()).getLastName();
                 txtMemName.setText(membername);
                 listOutBooks(book);
-                btnContinue.setEnabled(true);
 
             } else {
                 btnContinue.setEnabled(false);
