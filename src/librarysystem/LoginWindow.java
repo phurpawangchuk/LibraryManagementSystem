@@ -54,7 +54,7 @@ public class LoginWindow extends JFrame implements ActionListener {
 		p1.add(lblusername);
 		txtUsername = new JTextField();
 		txtUsername.setBounds(60, 60, 300, 30);
-		txtUsername.setText("103");
+		txtUsername.setText("superuser");
 		txtUsername.setBorder(BorderFactory.createEmptyBorder());
 		p1.add(txtUsername);
 
@@ -65,7 +65,7 @@ public class LoginWindow extends JFrame implements ActionListener {
 		lblpassword.setBounds(60, 110, 100, 25);
 		passwordField = new JPasswordField(20);
 		passwordField.setBounds(60, 150, 300, 30);
-		passwordField.setText("111");
+		passwordField.setText("superuser");
 		passwordField.setBorder(BorderFactory.createEmptyBorder());
 		p1.add(passwordField);
 		p1.add(lblpassword);

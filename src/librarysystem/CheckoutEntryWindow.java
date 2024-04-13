@@ -18,14 +18,13 @@ import dataaccess.DataAccessFacade;
 
 public class CheckoutEntryWindow extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
-	JTextField txtCheckOutDate, txtdueDate, txtBookTitle, txtBookDuration;
+	JTextField txtCheckOutDate, txtdueDate, txtBookTitle, txtBookDuration,txtMemberId,txtMembername;
 	JButton btnAddEntry, btnBack, btnCheckEntry;
 	CheckoutRecordWindow crw;
 	ControllerInterface ci = new SystemController();
 	HashMap<String, LibraryMember> memberMap;
 	HashMap<String, Book> bookMap;
 	Book book;
-
 
 	DefaultTableModel recordTableModel;
 	JTable recordtable;
@@ -71,21 +70,27 @@ public class CheckoutEntryWindow extends JFrame implements ActionListener {
         lblDuration.setBounds(40, 160, 200, 30);
         p1.add(lblDuration);
 
-		// left side text field
+        //right side
+        JLabel lblMemberId = new JLabel("Member ID");
+        lblMemberId.setBounds(350, 40, 100, 30);
+        p1.add(lblMemberId);
+
+        JLabel lblMembername = new JLabel("Member Name");
+        lblMembername.setBounds(350, 80, 100, 30);
+        p1.add(lblMembername);
+
+        // left side text field
 		txtCheckOutDate = new JTextField();
 		txtCheckOutDate.setBounds(160, 40, 150, 25);
 		txtCheckOutDate.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
 		txtCheckOutDate.setText(LocalDate.now().toString());
 		p1.add(txtCheckOutDate);
-
-
         txtCheckOutDate.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
                 validateCheckoutDate();
             }
         });
-
 
         txtdueDate = new JTextField();
         txtdueDate.setEditable(false);
@@ -108,6 +113,20 @@ public class CheckoutEntryWindow extends JFrame implements ActionListener {
         p1.add(txtBookDuration);
         txtBookDuration.setText(String.valueOf(book.getMaxCheckoutLength()));
 
+        //right
+        txtMemberId = new JTextField();
+        txtMemberId.setEditable(false);
+        txtMemberId.setBounds(450, 40, 150, 25);
+        txtMemberId.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        p1.add(txtMemberId);
+        txtMemberId.setText(crw.getMemId());
+
+        txtMembername = new JTextField();
+        txtMembername.setEditable(false);
+        txtMembername.setBounds(450, 80, 150, 25);
+        txtMembername.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        p1.add(txtMembername);
+        txtMembername.setText(crw.getMemberName());
         // Buttons
 
 		btnBack = Util.newbuttonStyle(new JButton("Back"));

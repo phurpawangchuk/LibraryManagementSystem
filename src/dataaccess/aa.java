@@ -95,14 +95,12 @@ public class aa implements DataAccess {
 
         DataAccess da = new DataAccessFacade();
 //
-        User admin = new User("admin","admin",Auth.ADMIN);
-        da.saveNewUser(admin);
-//
-        User lm = new User("librarian","librarian",Auth.LIBRARIAN);
-        da.saveNewUser(lm);
-//
-        User both = new User("superuser","superuser",Auth.BOTH);
-        da.saveNewUser(both);
+//        User admin = new User("admin","admin",Auth.ADMIN);
+//        da.saveNewUser(admin);
+//        User lm = new User("librarian","librarian",Auth.LIBRARIAN);
+//        da.saveNewUser(lm);
+//        User both = new User("superuser","superuser",Auth.BOTH);
+//        da.saveNewUser(both);
 
         Object user = c.readFromStorage(DataAccessFacade.StorageType.USERS);
 

@@ -14,7 +14,7 @@ public class CheckoutRecordWindow extends JFrame implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	JTextField txtMemId, txtIsbn;
+	JTextField txtMemId, txtIsbn, txtMemName;
 	JButton btnCheck, btnBack, btnContinue;
 	ControllerInterface ci = new SystemController();
 	DefaultTableModel recordTableModel;
@@ -101,6 +101,9 @@ public class CheckoutRecordWindow extends JFrame implements ActionListener {
 		JScrollPane scrollPane = new JScrollPane(recordtable);
 		scrollPane.setBounds(40, 180, 520, 50);
 
+        txtMemName = new JTextField();
+        txtMemName.setVisible(false);
+
 		p1.add(scrollPane);
 
 	}
@@ -108,12 +111,15 @@ public class CheckoutRecordWindow extends JFrame implements ActionListener {
 	public String getMemId() {
 		return txtMemId.getText();
 	}
+    public String getISBN() {
+        return txtIsbn.getText();
+    }
+    public String getMemberName() {
+        return txtMemName.getText();
+    }
 
-	public String getISBN() {
-		return txtIsbn.getText();
-	}
 
-	@Override
+    @Override
 	public void actionPerformed(ActionEvent ae) {
 
         String isbnNo = txtIsbn.getText();
@@ -131,6 +137,8 @@ public class CheckoutRecordWindow extends JFrame implements ActionListener {
             if (checkRecord) {
                 JOptionPane.showMessageDialog(null, "Record found! Click continue to check out");
                 book = daf.readBooksMap().get(isbnNo);
+                String membername = daf.readMemberMap().get(getMemId()).getFirstName()+" "+daf.readMemberMap().get(getMemId()).getLastName();
+                txtMemName.setText(membername);
                 listOutBooks(book);
                 btnContinue.setEnabled(true);
 
