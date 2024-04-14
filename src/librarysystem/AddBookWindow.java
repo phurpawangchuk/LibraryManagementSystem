@@ -1,5 +1,11 @@
 package librarysystem;
 
+import business.Author;
+import business.Book;
+import business.ControllerInterface;
+import business.SystemController;
+import dataaccess.DataAccessFacade;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,12 +14,6 @@ import java.util.HashMap;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-
-import business.Author;
-import business.Book;
-import business.ControllerInterface;
-import business.SystemController;
-import dataaccess.DataAccessFacade;
 
 public class AddBookWindow extends JFrame implements ActionListener {
 	/**
@@ -75,14 +75,14 @@ public class AddBookWindow extends JFrame implements ActionListener {
 		// left side text field
         txtIsbn = new JFormattedTextField(Util.IsbnFormatter());
 		txtIsbn.setBounds(180, 40, 100, 25);
-		txtIsbn.setText("12-3456789");
+//		txtIsbn.setText("12-3456789");
 		txtIsbn.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
 		p1.add(txtIsbn);
 
 		txtTitle = new JTextField();
 		txtTitle.setBounds(180, 80, 300, 25);
 		txtTitle.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
-		txtTitle.setText("Java21");
+//		txtTitle.setText("Java21");
 		p1.add(txtTitle);
 
 		rb21 = new JRadioButton("21 Days");
@@ -157,7 +157,7 @@ public class AddBookWindow extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 
         String isbn = txtIsbn.getText();
-		String title = txtTitle.getText();
+        String title = txtTitle.getText();
 		String maxlen = lendDaysGroup.getSelection().getActionCommand();
 		int len = Integer.parseInt(maxlen);
 
@@ -166,6 +166,8 @@ public class AddBookWindow extends JFrame implements ActionListener {
             setVisible(false);
             dispose();
         }else {
+
+
             if (title.length() < 3 || title.length() > 50) {
                 JOptionPane.showMessageDialog(null, "Book title should be between 3 and 50 characters");
                 return;
@@ -189,20 +191,31 @@ public class AddBookWindow extends JFrame implements ActionListener {
                 DataAccessFacade daf = new DataAccessFacade();
                 HashMap<String, Book> map = daf.readBooksMap();
 
-                if (authors.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Authors should not be empty");
+                if (isbn.trim().length() !=10) {
+                    JOptionPane.showMessageDialog(null, "Provide valid ISBN number");
                     return;
                 }
-                if (map.containsKey(isbn)) {
-                    JOptionPane.showMessageDialog(null, "Book already present in Library Management System");
-                } else {
-                    daf.saveNewBook(book);
-                    JOptionPane.showMessageDialog(null, "Book Added Successfully");
-                }
 
+                if(map.containsKey(isbn))
+                {
+                    JOptionPane.showMessageDialog(null, "Same ISBN already exist.");
+                    return;
+                }else {
+
+                    if (authors.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Authors should not be empty");
+                        return;
+                    }
+                    if (map.containsKey(isbn)) {
+                        JOptionPane.showMessageDialog(null, "Book already present in Library Management System");
+                    } else {
+                        daf.saveNewBook(book);
+                        JOptionPane.showMessageDialog(null, "Book Added Successfully");
+                        dispose();
+                    }
+                }
             }
         }
-
 	}
 
 }

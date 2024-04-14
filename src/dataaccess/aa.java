@@ -1,21 +1,15 @@
 package dataaccess;
 
-import java.io.IOException;
+import business.Book;
+import business.LibraryMember;
+import dataaccess.DataAccess;
+
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
-
-import business.Book;
-import business.BookCopy;
-import business.LibraryMember;
-import dataaccess.DataAccess;
-import dataaccess.DataAccessFacade.StorageType;
-import dataaccess.User;
 
 
 public class aa implements DataAccess {
@@ -40,7 +34,7 @@ public class aa implements DataAccess {
     public HashMap<String, User> readUserMap() {
         //Returns a Map with name/value pairs being
         //   userId -> User
-        return (HashMap<String, User>)readFromStorage(dataaccess.DataAccessFacade.StorageType.USERS);
+        return (HashMap<String, User>)readFromStorage(DataAccessFacade.StorageType.USERS);
     }
 
     @Override
@@ -58,6 +52,10 @@ public class aa implements DataAccess {
         System.out.println("AAAAAAA");
     }
 
+    @Override
+    public void removeBook() {
+    }
+
 
     static void loadUserMap(List<User> userList) {
         HashMap<String, User> users = new HashMap<String, User>();
@@ -65,7 +63,7 @@ public class aa implements DataAccess {
     }
 
 
-    public static Object readFromStorage(dataaccess.DataAccessFacade.StorageType type) {
+    public static Object readFromStorage(DataAccessFacade.StorageType type) {
         ObjectInputStream in = null;
         Object retVal = null;
         try {
@@ -102,8 +100,12 @@ public class aa implements DataAccess {
 //        User both = new User("superuser","superuser",Auth.BOTH);
 //        da.saveNewUser(both);
 
-        Object user = c.readFromStorage(DataAccessFacade.StorageType.USERS);
 
-        System.out.println(user);
+//        da.removeBook();
+
+        Object obj = c.readFromStorage(DataAccessFacade.StorageType.BOOKS);
+        System.out.println(obj);
+
+
     }
 }

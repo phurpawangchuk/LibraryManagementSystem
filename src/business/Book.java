@@ -7,8 +7,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import javax.print.attribute.standard.Copies;
-
 /**
  *
  */
@@ -17,7 +15,7 @@ final public class Book implements Serializable {
 	private static final long serialVersionUID = 6110690276685962829L;
 	private BookCopy[] copies;
 	private List<Author> authors;
-	private String isbn;
+	public String isbn;
 	private String title;
 	private int maxCheckoutLength;
 	public Book(String isbn, String title, int maxCheckoutLength, List<Author> authors) {
@@ -83,7 +81,8 @@ final public class Book implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "isbn: " + isbn + ", maxLength: " + maxCheckoutLength + ", available: " + isAvailable();
+        return "\nisbn: " + isbn;
+        //return "isbn: " + isbn + ", maxLength: " + maxCheckoutLength + ", available: " + isAvailable();
 	}
 	
 	public int getNumCopies() {

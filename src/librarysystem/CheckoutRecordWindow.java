@@ -59,7 +59,7 @@ public class CheckoutRecordWindow extends JFrame implements ActionListener {
 		txtIsbn.setBounds(160, 80, 120, 25);
 		txtIsbn.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
 		p1.add(txtIsbn);
-//		txtIsbn.setText("12-3456789");
+		txtIsbn.setText("12-3456789");
 
 		// Buttons
 		btnCheck = Util.newbuttonStyle(new JButton("Check"));

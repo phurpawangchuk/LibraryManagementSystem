@@ -5,8 +5,6 @@ import java.awt.FlowLayout;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Collections;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -59,7 +57,6 @@ public class AllBookIdsWindow extends JFrame implements LibWindow {
 		FlowLayout fl = new FlowLayout(FlowLayout.CENTER, 25, 25);
 		middlePanel.setLayout(fl);
 		textArea = new TextArea(8, 20);
-		//populateTextArea();
 		middlePanel.add(textArea);
 		
 	}
@@ -85,17 +82,6 @@ public class AllBookIdsWindow extends JFrame implements LibWindow {
 	public void setData(String data) {
 		textArea.setText(data);
 	}
-	
-//	private void populateTextArea() {
-//		//populate
-//		List<String> ids = ci.allBookIds();
-//		Collections.sort(ids);
-//		StringBuilder sb = new StringBuilder();
-//		for(String s: ids) {
-//			sb.append(s + "\n");
-//		}
-//		textArea.setText(sb.toString());
-//	}
 
 	@Override
 	public boolean isInitialized() {

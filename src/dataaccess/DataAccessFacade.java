@@ -1,4 +1,8 @@
 package dataaccess;
+
+import business.Book;
+import business.LibraryMember;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -6,13 +10,7 @@ import java.io.Serializable;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.List;
-
-import business.Book;
-import business.BookCopy;
-import business.LibraryMember;
-import dataaccess.DataAccessFacade.StorageType;
+import java.util.*;
 
 
 public class DataAccessFacade implements DataAccess {
@@ -40,7 +38,7 @@ public class DataAccessFacade implements DataAccess {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public  HashMap<String,Book> readBooksMap() {
+	public  HashMap<String, Book> readBooksMap() {
 		//Returns a Map with name/value pairs being
 		//   isbn -> Book
 		return (HashMap<String,Book>) readFromStorage(StorageType.BOOKS);
@@ -166,6 +164,8 @@ public class DataAccessFacade implements DataAccess {
 	    books.put(isbn, book);
 	    saveToStorage(StorageType.BOOKS, books);
 	}
+
+
 //
 	public  void updateLibraryMember(LibraryMember member) {
 	    HashMap<String, LibraryMember> librarymember = readMemberMap();
@@ -187,5 +187,21 @@ public class DataAccessFacade implements DataAccess {
         HashMap<String, User> u = readUserMap();
         u.put(user.getId(),user);
         saveToStorage(StorageType.USERS, u);
+    }
+
+    @Override
+    public void removeBook() {
+        HashMap<String, Book> books = readBooksMap();
+        String isbn = "  -       ";
+        for(Map.Entry<String, Book> b: books.entrySet()){
+            if(b.getValue().getIsbn().equals(isbn)) {
+                books.remove(isbn);
+                System.out.println("Removed.."+b.getValue().getIsbn());
+                saveToStorage(StorageType.BOOKS, books);
+            }else{
+                System.out.println(b.getValue().getIsbn());
+            }
+        }
+
     }
 }

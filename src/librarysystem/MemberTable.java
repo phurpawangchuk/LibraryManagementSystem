@@ -1,11 +1,12 @@
 package librarysystem;
 
+import business.LibraryMember;
+import business.SystemController;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-import business.LibraryMember;
-import business.SystemController;
 
 public class MemberTable {
 	public static void main(String[] args) {

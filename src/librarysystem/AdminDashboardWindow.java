@@ -1,16 +1,16 @@
 
 package librarysystem;
 
-import java.awt.*;
-import javax.swing.*;
-import javax.swing.plaf.basic.BasicButtonUI;
-import javax.swing.table.DefaultTableModel;
-
 import business.Book;
 import business.ControllerInterface;
 import business.LibraryMember;
 import business.SystemController;
 import dataaccess.User;
+
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.plaf.basic.BasicButtonUI;
+import javax.swing.table.DefaultTableModel;
 
 import java.awt.event.*;
 import java.util.HashMap;
@@ -22,6 +22,8 @@ public class AdminDashboardWindow extends JFrame implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 
+    public static final AdminDashboardWindow INSTANCE = new AdminDashboardWindow();
+
 	String role;
 	JButton btnAddMember, btnAddBook, btnBookCopy, btnCheckOutRecords, btnViewBook, btnViewMember, btnViewUser,
 			btnLogout;
@@ -30,6 +32,7 @@ public class AdminDashboardWindow extends JFrame implements ActionListener {
 	JPanel p1, p2;
 	
 	ControllerInterface ci = new SystemController();
+    AdminDashboardWindow(){}
 
 	AdminDashboardWindow(String role) {
 		this.role = role;

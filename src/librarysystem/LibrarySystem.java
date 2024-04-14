@@ -1,5 +1,8 @@
 package librarysystem;
 
+import business.ControllerInterface;
+import business.SystemController;
+
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,8 +18,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import business.ControllerInterface;
-import business.SystemController;
 
 
 public class LibrarySystem extends JFrame implements LibWindow {

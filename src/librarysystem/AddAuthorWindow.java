@@ -1,12 +1,11 @@
 package librarysystem;
 
-import java.awt.Color;
+import business.Address;
+import business.Author;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-
-import business.*;
-
 
 public class AddAuthorWindow extends JFrame implements ActionListener {
 	/**
@@ -89,7 +88,7 @@ public class AddAuthorWindow extends JFrame implements ActionListener {
 		txtLastName.setBounds(160, 40, 120, 25);
 		txtLastName.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
 		p2.add(txtLastName);
-		txtLastName.setText("Baggage ");
+//		txtLastName.setText("Baggage ");
 
 		txtStreet = new JTextField();
 		txtStreet.setBounds(160, 80, 120, 25);
@@ -171,18 +170,12 @@ public class AddAuthorWindow extends JFrame implements ActionListener {
         String zip = txtZip.getText();
 
 
-
         if (ae.getSource() == btnCancelAuthor) {
             dispose();
             setVisible(false);
             parentWindow.setVisible(true);
         }else{
         // Check for empty fields
-//        if (firstname.isEmpty() || lastname.isEmpty() || street.isEmpty() || city.isEmpty() || state.isEmpty()
-//                || zip.isEmpty() || telephone.isEmpty() || biography.isEmpty()) {
-//            JOptionPane.showMessageDialog(null, "All fields are required.");
-//            return; // Return without proceeding if any field is empty
-//        }
             for (int i = 0; i < fields.length; i++) {
                 String fieldValue = fields[i].getText();
                 String fieldName = fieldNames[i];

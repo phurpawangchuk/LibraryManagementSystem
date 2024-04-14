@@ -1,6 +1,7 @@
 package librarysystem;
 
 import business.*;
+import dataaccess.DataAccessFacade;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,19 +15,19 @@ import java.util.HashMap;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import dataaccess.DataAccessFacade;
 
 public class CheckoutEntryWindow extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
-	JTextField txtCheckOutDate, txtdueDate, txtBookTitle, txtBookDuration,txtMemberId,txtMembername;
+	JTextField txtCheckOutDate;
 	JButton btnAddEntry, btnBack, btnCheckEntry;
 	CheckoutRecordWindow crw;
 	ControllerInterface ci = new SystemController();
 	HashMap<String, LibraryMember> memberMap;
 	HashMap<String, Book> bookMap;
 	Book book;
+    JLabel txtdueDate, txtBookTitle, txtBookDuration,txtMemberId,txtMembername;
 
-	DefaultTableModel recordTableModel;
+    DefaultTableModel recordTableModel;
 	JTable recordtable;
 
 	public CheckoutEntryWindow(CheckoutRecordWindow crw) {
@@ -92,37 +93,32 @@ public class CheckoutEntryWindow extends JFrame implements ActionListener {
             }
         });
 
-        txtdueDate = new JTextField();
-        txtdueDate.setEditable(false);
+        txtdueDate = new JLabel();
 		txtdueDate.setBounds(160, 80, 150, 25);
 		txtdueDate.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
 		p1.add(txtdueDate);
 		txtdueDate.setText(LocalDate.now().plusDays(book.getMaxCheckoutLength()).toString());
 
-		txtBookTitle = new JTextField();
-        txtBookTitle.setEditable(false);
+		txtBookTitle = new JLabel();
 		txtBookTitle.setBounds(160, 120, 150, 25);
 		txtBookTitle.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
 		p1.add(txtBookTitle);
 		txtBookTitle.setText(book.getTitle());
 
-        txtBookDuration = new JTextField();
-        txtBookDuration.setEditable(false);
+        txtBookDuration = new JLabel();
         txtBookDuration.setBounds(160, 160, 150, 25);
         txtBookDuration.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
         p1.add(txtBookDuration);
         txtBookDuration.setText(String.valueOf(book.getMaxCheckoutLength()));
 
         //right
-        txtMemberId = new JTextField();
-        txtMemberId.setEditable(false);
+        txtMemberId = new JLabel();
         txtMemberId.setBounds(450, 40, 150, 25);
         txtMemberId.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
         p1.add(txtMemberId);
         txtMemberId.setText(crw.getMemId());
 
-        txtMembername = new JTextField();
-        txtMembername.setEditable(false);
+        txtMembername = new JLabel();
         txtMembername.setBounds(450, 80, 150, 25);
         txtMembername.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
         p1.add(txtMembername);

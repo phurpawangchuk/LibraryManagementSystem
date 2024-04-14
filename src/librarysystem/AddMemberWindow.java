@@ -12,6 +12,7 @@ import business.LibraryMember;
 import business.SystemController;
 import dataaccess.DataAccessFacade;
 
+
 public class AddMemberWindow extends JFrame implements ActionListener {
 	/**
 	 * 
@@ -89,37 +90,37 @@ public class AddMemberWindow extends JFrame implements ActionListener {
 		p1.add(txtMemId);
 
 		txtFirstName = new JTextField();
-		txtFirstName.setText("Alice");
+//		txtFirstName.setText("Alice");
 		txtFirstName.setBounds(160, 40, 120, 25);
 		txtFirstName.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
 		p2.add(txtFirstName);
 
 		txtLastName = new JTextField();
-		txtLastName.setText("Bob");
+//		txtLastName.setText("Bob");
 		txtLastName.setBounds(160, 80, 120, 25);
 		txtLastName.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
 		p1.add(txtLastName);
 
 		txtStreet = new JTextField();
-		txtStreet.setText("1000 North ");
+//		txtStreet.setText("1000 North ");
 		txtStreet.setBounds(160, 80, 120, 25);
 		txtStreet.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
 		p2.add(txtStreet);
 
 		txtCity = new JTextField();
-		txtCity.setText("Fairfield");
+//		txtCity.setText("Fairfield");
 		txtCity.setBounds(160, 120, 120, 25);
 		txtCity.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
 		p1.add(txtCity);
 
 		txtState = new JTextField();
-		txtState.setText("Iowa");
+//		txtState.setText("Iowa");
 		txtState.setBounds(160, 120, 120, 25);
 		txtState.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
 		p2.add(txtState);
 
 		txtZip = new JTextField();
-		txtZip.setText("52557");
+//		txtZip.setText("52557");
 		txtZip.setBounds(160, 160, 120, 25);
 		txtZip.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
 		p1.add(txtZip);
